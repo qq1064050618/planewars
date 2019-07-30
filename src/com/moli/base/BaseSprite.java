@@ -4,6 +4,14 @@ public class BaseSprite {
     private int x;
     private  int y;
 
+    public BaseSprite() {
+    }
+
+    public BaseSprite(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
     public int getX() {
         return x;
     }
