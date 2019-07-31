@@ -3,6 +3,7 @@ package com.moli.runtime;
 import com.moli.base.BaseSprite;
 import com.moli.base.Drawable;
 import com.moli.base.Moveable;
+import com.moli.constant.FrameConstant;
 import com.moli.util.ImageMap;
 import com.moli.util.ImageUtil;
 
@@ -13,7 +14,7 @@ public class Background extends BaseSprite implements Drawable, Moveable {
     private Image image;
 
     public Background() {
-        this(0, 0, ImageMap.get("bg01"));
+        this(0,FrameConstant.FRAME_HEIGHT -ImageMap.get("bg01").getHeight(null), ImageMap.get("bg01"));
 
     }
 
@@ -24,10 +25,7 @@ public class Background extends BaseSprite implements Drawable, Moveable {
 
     @Override
     public void move() {
-        if (getY() > -10240)
-            setY(getY() - 1);
-        else
-            setY(0);
+            setY(getY() +FrameConstant.GAME_SPEED);
     }
 
     @Override
