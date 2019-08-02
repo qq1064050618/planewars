@@ -14,11 +14,7 @@ import java.util.List;
 
 public class Bullet extends BaseSprite implements Moveable, Drawable {
     private Image image;
-    private int SPEED = FrameConstant.GAME_SPEED * 5;
-
-    public Bullet() {
-        this(0, 0, ImageMap.get("mb01"));
-    }
+    private int SPEED = FrameConstant.GAME_SPEED * 3;
 
     public Bullet(int x, int y, Image image) {
         super(x, y);
@@ -46,15 +42,54 @@ public class Bullet extends BaseSprite implements Moveable, Drawable {
     public Rectangle getRectangle() {
         return new Rectangle(getX(),getY(),image.getWidth(null),image.getHeight(null));
     }
+
     public  void  collisionTesting(List<EnemyPlane> enemyPlaneList){
         GameFrame gameFrame=DataStore.get("gameFrame");
         for (EnemyPlane e:enemyPlaneList
              ) {
+            //intersects 交叉
             if (e.getRectangle().intersects(this.getRectangle())){
                 enemyPlaneList.remove(e);
                 gameFrame.bulletsList.remove(this);
+                gameFrame.score+=2;
+            }
+            for (int i=1;i<10;i++) {
+                gameFrame.explodes.add(new Explode(e.getX(), e.getY(), ImageMap.get("explod"+i)));
+                gameFrame.isExplode=true;
+            }
+            for (int i=1;i<10;i++) {
+                gameFrame.explodes.add(new Explode(e.getX(), e.getY(), ImageMap.get("explod"+i)));
+                gameFrame.isExplode=true;
             }
         }
 
     }
+    public  void  collisionTestingPlus(List<EnemyPlanePlus> enemyPlanePluses){
+        GameFrame gameFrame=DataStore.get("gameFrame");
+        for (EnemyPlanePlus e:enemyPlanePluses
+        ) {
+            //intersects 交叉
+            if (e.getRectangle().intersects(this.getRectangle())){
+                enemyPlanePluses.remove(e);
+                gameFrame.bulletsList.remove(this);
+                gameFrame.score+=5;
+            }
+            for (int i=1;i<10;i++) {
+                gameFrame.explodes.add(new Explode(e.getX(), e.getY(), ImageMap.get("explod"+i)));
+                gameFrame.isExplode=true;
+            }
+        }
+    }
+    public  void  collisionTestingBoss(Boss boss){
+        GameFrame gameFrame=DataStore.get("gameFrame");
+        if (boss.getRectangle().intersects(this.getRectangle())){
+            gameFrame.bossBlood--;
+        }
+        if (gameFrame.bossBlood<=0){
+            gameFrame.score+=50;
+        for (int i=1;i<10;i++) {
+            gameFrame.explodes.add(new Explode(boss.getX(), boss.getY(), ImageMap.get("explod"+i)));
+            gameFrame.isExplode=true;
+        }
+    }  }
 }

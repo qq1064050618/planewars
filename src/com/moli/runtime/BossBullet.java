@@ -11,15 +11,15 @@ import com.moli.util.ImageMap;
 import java.awt.*;
 import java.util.List;
 
-public class EnemyBullet extends BaseSprite implements Drawable, Moveable {
+public class BossBullet extends BaseSprite implements Drawable, Moveable {
     private Image image;
-    private final int SPEED = FrameConstant.GAME_SPEED *3;
+    private final int SPEED = FrameConstant.GAME_SPEED * 3;
 
-    public EnemyBullet() {
+    public BossBullet() {
         this(0, 0, ImageMap.get("eb01"));
     }
 
-    public EnemyBullet(int x, int y, Image image) {
+    public BossBullet(int x, int y, Image image) {
         super(x, y);
         this.image = image;
     }
@@ -39,7 +39,7 @@ public class EnemyBullet extends BaseSprite implements Drawable, Moveable {
     public void borderTesting() {
         if (getY() > FrameConstant.FRAME_HEIGHT) {
             GameFrame gameFrame = DataStore.get("gameFrame");
-            gameFrame.enemyBullets.remove(this);
+            gameFrame.bossBullets.remove(this);
         }
     }
     @Override
@@ -48,16 +48,17 @@ public class EnemyBullet extends BaseSprite implements Drawable, Moveable {
     }
     public  void  collisionTesting(Plane plane){
         GameFrame gameFrame=DataStore.get("gameFrame");
-            if (plane.getRectangle().intersects(this.getRectangle())){
-                if (Plane.type>1){
-                    Plane.type--;
-                    gameFrame.enemyBullets.remove(this);
-                }else {
-                    gameFrame.blood--;
-                }
-                if (gameFrame.blood==0){
-                    gameFrame.gameOver=true;
-                }
+        if (plane.getRectangle().intersects(this.getRectangle())){
+            if (Plane.type>1){
+                gameFrame.enemyBullets.remove(this);
+                Plane.type--;
+            }else {
+                gameFrame.blood--;
             }
+            if (gameFrame.blood==0){
+                gameFrame.gameOver=true;
+            }
+        }
     }
 }
+

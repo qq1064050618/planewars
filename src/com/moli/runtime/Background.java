@@ -10,12 +10,11 @@ import com.moli.util.ImageUtil;
 import java.awt.*;
 
 public class Background extends BaseSprite implements Drawable, Moveable {
-
+//实现BaseSprite的构造属性方法，实现接口Drawable，Moveable的画和移动的方法
     private Image image;
 
     public Background() {
         this(0,FrameConstant.FRAME_HEIGHT -ImageMap.get("bg01").getHeight(null), ImageMap.get("bg01"));
-
     }
 
     public Background(int x, int y, Image image) {
@@ -26,6 +25,9 @@ public class Background extends BaseSprite implements Drawable, Moveable {
     @Override
     public void move() {
             setY(getY() +FrameConstant.GAME_SPEED);
+            if (getY()==0){
+                setY(FrameConstant.FRAME_HEIGHT-ImageMap.get("bg01").getHeight(null));
+            }
     }
 
     @Override

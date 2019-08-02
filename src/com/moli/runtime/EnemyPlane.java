@@ -13,7 +13,7 @@ import java.util.Random;
 
 public class EnemyPlane extends BaseSprite implements Moveable, Drawable {
     private Image image;
-    private final int SPEED = FrameConstant.GAME_SPEED * 3;
+    private final int SPEED = FrameConstant.GAME_SPEED *2;
     Random random=new Random();
 
 
@@ -30,12 +30,10 @@ public class EnemyPlane extends BaseSprite implements Moveable, Drawable {
             g.drawImage(image, getX(), getY(), image.getWidth(null), image.getHeight(null), null);
             move();
             fire();
-      //  newEnemyPlane();
     }
 public void fire() {
-
     GameFrame gameFrame = DataStore.get("gameFrame");
-    if (random.nextInt(1000) > 980) {
+    if (random.nextInt(1000)>985) {
         gameFrame.enemyBullets.add(new EnemyBullet(
                 getX() + (image.getWidth(null) / 2) - (ImageMap.get("eb01").getWidth(null) / 2),
                 getY() + ImageMap.get("eb01").getHeight(null),
@@ -60,12 +58,4 @@ public void fire() {
         return new Rectangle(getX(),getY(),image.getWidth(null),image.getHeight(null));
     }
 
-
-/*    public void newEnemyPlane(){
-        GameFrame gameFrame = new GameFrame();
-            if (random.nextInt(800) < 800) {
-                gameFrame.enemyPlane.add(new EnemyPlane(random.nextInt(800), 50, ImageMap.get("ep01")));
-                System.out.println(gameFrame.enemyPlane.size());
-            }
-    }*/
 }

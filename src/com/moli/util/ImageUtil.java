@@ -5,6 +5,9 @@ import java.awt.Image;
 import java.io.IOException;
 
 public class ImageUtil {
+    //用来封装读图片的方法
+
+
     public static Image getImage(String path){
         Image image=null;
         try {
