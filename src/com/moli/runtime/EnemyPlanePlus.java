@@ -29,10 +29,10 @@ public class EnemyPlanePlus extends BaseSprite implements Moveable, Drawable {
 
     @Override
     public void draw(Graphics g) {
-        g.drawImage(image, getX(), getY(), image.getWidth(null), image.getHeight(null), null);
         move();
         move1();
         fire();
+        g.drawImage(image, getX(), getY(), image.getWidth(null), image.getHeight(null), null);
     }
 
     public void fire() {

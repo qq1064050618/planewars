@@ -23,9 +23,9 @@ public class Bullet extends BaseSprite implements Moveable, Drawable {
 
     @Override
     public void draw(Graphics g) {
-        g.drawImage(image, getX(), getY(), image.getWidth(null), image.getHeight(null), null);
         move();
         borderTesting();
+        g.drawImage(image, getX(), getY(), image.getWidth(null), image.getHeight(null), null);
     }
 
     @Override

@@ -13,13 +13,14 @@ import java.util.Random;
 
 public class EnemyPlane extends BaseSprite implements Moveable, Drawable {
     private Image image;
-    private final int SPEED = FrameConstant.GAME_SPEED *2;
-    Random random=new Random();
+    private final int SPEED = FrameConstant.GAME_SPEED * 2;
+    Random random = new Random();
 
 
     public EnemyPlane() {
         this(0, 0, ImageMap.get("ep01"));
     }
+
     public EnemyPlane(int x, int y, Image image) {
         super(x, y);
         this.image = image;
@@ -27,19 +28,21 @@ public class EnemyPlane extends BaseSprite implements Moveable, Drawable {
 
     @Override
     public void draw(Graphics g) {
-            g.drawImage(image, getX(), getY(), image.getWidth(null), image.getHeight(null), null);
-            move();
-            fire();
+        move();
+        fire();
+        g.drawImage(image, getX(), getY(), image.getWidth(null), image.getHeight(null), null);
     }
-public void fire() {
-    GameFrame gameFrame = DataStore.get("gameFrame");
-    if (random.nextInt(1000)>985) {
-        gameFrame.enemyBullets.add(new EnemyBullet(
-                getX() + (image.getWidth(null) / 2) - (ImageMap.get("eb01").getWidth(null) / 2),
-                getY() + ImageMap.get("eb01").getHeight(null),
-                ImageMap.get("eb01")));
+
+    public void fire() {
+        GameFrame gameFrame = DataStore.get("gameFrame");
+        if (random.nextInt(1000) > 985) {
+            gameFrame.enemyBullets.add(new EnemyBullet(
+                    getX() + (image.getWidth(null) / 2) - (ImageMap.get("eb01").getWidth(null) / 2),
+                    getY() + ImageMap.get("eb01").getHeight(null),
+                    ImageMap.get("eb01")));
+        }
     }
-}
+
     @Override
     public void move() {
         setY(getY() + SPEED);
@@ -55,7 +58,7 @@ public void fire() {
 
     @Override
     public Rectangle getRectangle() {
-        return new Rectangle(getX(),getY(),image.getWidth(null),image.getHeight(null));
+        return new Rectangle(getX(), getY(), image.getWidth(null), image.getHeight(null));
     }
 
 }

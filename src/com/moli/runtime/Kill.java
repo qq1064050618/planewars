@@ -25,11 +25,11 @@ public class Kill extends BaseSprite implements Drawable, Moveable {
 
     @Override
     public void draw(Graphics g) {
-        g.drawImage(image, getX(), getY(), image.getWidth(null), image.getHeight(null), null);
- //  move();
         move1();
         move2();
         move3();
+        g.drawImage(image, getX(), getY(), image.getWidth(null), image.getHeight(null), null);
+ //  move();
     }
 
     @Override

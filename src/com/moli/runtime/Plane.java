@@ -42,15 +42,14 @@ public class Plane extends BaseSprite implements Drawable, Moveable {
     @Override
     public void draw(Graphics g) {
         long end=System.currentTimeMillis();
-        Random random=new Random();
-        g.drawImage(image, getX(), getY(), image.getWidth(null), image.getHeight(null), null);
-      if (end-start<0){
-           newEnemyPlane();
-       }else {
-           newEnemyPlanePlus();
-       }
+        if (end-start<0){
+            newEnemyPlane();
+        }else {
+            newEnemyPlanePlus();
+        }
 
         move();
+        g.drawImage(image, getX(), getY(), image.getWidth(null), image.getHeight(null), null);
     }
 
     public void fire() {

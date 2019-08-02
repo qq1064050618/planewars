@@ -33,7 +33,6 @@ public class Boss extends BaseSprite implements Moveable, Drawable {
         long end=System.currentTimeMillis();
         if (end-start<=50000) {
         }else {
-            g.drawImage(image, getX(), getY(), image.getWidth(null), image.getHeight(null), null);
             if (getX() + ImageMap.get("boss").getWidth(null) >= FrameConstant.FRAME_WIDTH) {
                 index = 1;
             }
@@ -45,6 +44,7 @@ public class Boss extends BaseSprite implements Moveable, Drawable {
             }
             move();
             fire();
+            g.drawImage(image, getX(), getY(), image.getWidth(null), image.getHeight(null), null);
         }
     }
     public void fire() {
