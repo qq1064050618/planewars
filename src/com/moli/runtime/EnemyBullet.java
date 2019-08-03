@@ -50,9 +50,13 @@ public class EnemyBullet extends BaseSprite implements Drawable, Moveable {
         GameFrame gameFrame=DataStore.get("gameFrame");
             if (plane.getRectangle().intersects(this.getRectangle())){
                 if (Plane.type>1){
-                    Plane.type--;
+                    if (gameFrame.guards.size()!=0){
+                        gameFrame.guards.removeAll(gameFrame.guards);
+                    }else {
+                    Plane.type--;}
                     gameFrame.enemyBullets.remove(this);
                 }else {
+                    gameFrame.enemyBullets.remove(this);
                     gameFrame.blood--;
                 }
                 if (gameFrame.blood==0){

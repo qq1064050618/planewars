@@ -35,7 +35,7 @@ public class ImageMap {
         map.put("explod2", ImageUtil.getImage("com\\moli\\imgs\\explode\\2.png"));
         map.put("explod3", ImageUtil.getImage("com\\moli\\imgs\\explode\\3.png"));
         map.put("explod4", ImageUtil.getImage("com\\moli\\imgs\\explode\\4.png"));
-        map.put("explod5", ImageUtil.getImage("com\\moli\\imgs\\explode\\5.png"));
+        map.put("explod5", ImageUtil.getImage("com\\moli\\imgs\\explode\\4.png"));
         map.put("explod6", ImageUtil.getImage("com\\moli\\imgs\\explode\\6.png"));
         map.put("explod7", ImageUtil.getImage("com\\moli\\imgs\\explode\\7.png"));
         map.put("explod8", ImageUtil.getImage("com\\moli\\imgs\\explode\\8.png"));
@@ -45,9 +45,9 @@ public class ImageMap {
         map.put("kill2", ImageUtil.getImage("com\\moli\\imgs\\bullet\\2.png"));
         map.put("kill3", ImageUtil.getImage("com\\moli\\imgs\\bullet\\3.png"));
         map.put("kill4", ImageUtil.getImage("com\\moli\\imgs\\bullet\\4.png"));
-        map.put("kill5", ImageUtil.getImage("com\\moli\\imgs\\bullet\\5.png"));
         map.put("kill6", ImageUtil.getImage("com\\moli\\imgs\\bullet\\6.png"));
-
+//防护罩
+        map.put("guard", ImageUtil.getImage("com\\moli\\imgs\\tool\\gurad.png"));
 
     }
 

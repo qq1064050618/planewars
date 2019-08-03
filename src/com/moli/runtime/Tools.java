@@ -46,6 +46,11 @@ public class Tools extends BaseSprite implements Drawable, Moveable {
             if (type==1&&Plane.type<3){
                 Plane.type++;
             }
+           if (type==1&&Plane.type==3){
+               gameFrame.guards.removeAll(gameFrame.guards);
+                gameFrame.guards.add(new Guard(plane.getX(),plane.getY(),ImageMap.get("guard")));
+                gameFrame.guard=true;
+            }
         }
 
     }

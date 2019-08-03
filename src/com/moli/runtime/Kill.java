@@ -28,8 +28,9 @@ public class Kill extends BaseSprite implements Drawable, Moveable {
         move1();
         move2();
         move3();
+        move4();
         g.drawImage(image, getX(), getY(), image.getWidth(null), image.getHeight(null), null);
- //  move();
+        kill();
     }
 
     @Override
@@ -39,7 +40,7 @@ public class Kill extends BaseSprite implements Drawable, Moveable {
         gameFrame.kills.add(new Kill(320,400,ImageMap.get("kill2"),2));
         gameFrame.kills.add(new Kill(320,400,ImageMap.get("kill3"),3));
         gameFrame.kills.add(new Kill(320,400,ImageMap.get("kill4"),4));
-        gameFrame.kills.add(new Kill(320,400,ImageMap.get("kill5"),5));
+        //gameFrame.kills.add(new Kill(320,400,ImageMap.get("kill5"),5));
         gameFrame.kills.add(new Kill(320,400,ImageMap.get("kill6"),6));
     }
     public void  move1(){
@@ -53,6 +54,9 @@ public class Kill extends BaseSprite implements Drawable, Moveable {
             kill.setY(kill.getY()+1);
         }else {
             kill.setY(kill.getY()-1);
+        }
+        if (x-kill.getX()==300){
+            gameFrame.indexKill=true;
         }
      }
     }
@@ -84,5 +88,23 @@ public class Kill extends BaseSprite implements Drawable, Moveable {
             }
         }
     }
-
+    public void  move4(){
+        GameFrame gameFrame=DataStore.get("gameFrame");
+        Kill kill=gameFrame.kills.get(3);
+        int x=320;
+        int y=400;
+        if (kill.getY()-y<=300){
+            kill.setY(kill.getY()+1);
+            if (kill.getY()-y<=150){
+                kill.setX(kill.getX()+1);
+            }else {
+                kill.setX(kill.getX()-1);
+            }
+        }
+    }
+public void  kill(){
+        GameFrame gameFrame=DataStore.get("gameFrame");
+        gameFrame.enemyPlane.removeAll(gameFrame.enemyPlane);
+        gameFrame.enemyPlanePluses.removeAll(gameFrame.enemyPlanePluses);
+}
 }

@@ -14,8 +14,10 @@ import java.util.Random;
 public class EnemyPlanePlus extends BaseSprite implements Moveable, Drawable {
 
     private Image image;
-    private final int SPEED = FrameConstant.GAME_SPEED *3;
+    private final int SPEED = FrameConstant.GAME_SPEED *2;
     Random random = new Random();
+    int x=0;
+    int index=0;
 
 
     public EnemyPlanePlus() {
@@ -29,8 +31,16 @@ public class EnemyPlanePlus extends BaseSprite implements Moveable, Drawable {
 
     @Override
     public void draw(Graphics g) {
+        if (getX() + ImageMap.get("ep02").getWidth(null) >= FrameConstant.FRAME_WIDTH) {
+            index = 1;
+        }
+        if (index == 1) {
+            move1();
+            if (getX() <= 0) {
+                index = 0;
+            }
+        }
         move();
-        move1();
         fire();
         g.drawImage(image, getX(), getY(), image.getWidth(null), image.getHeight(null), null);
     }
@@ -48,16 +58,17 @@ public class EnemyPlanePlus extends BaseSprite implements Moveable, Drawable {
     @Override
     public void move() {
         setY(getY() + SPEED);
+        setX(getX()+4);
         borderTesting();
     }
     public void move1() {
-        setX(getX()+10);
+        setY(getY() + SPEED);
+        setX(getX()-8);
         borderTesting();
     }
 
     public void borderTesting() {
-        if (getY() > FrameConstant.FRAME_HEIGHT||getX()<=0||
-                getX()+ImageMap.get("ep02").getWidth(null)>=FrameConstant.FRAME_WIDTH) {
+        if (getY() > FrameConstant.FRAME_HEIGHT) {
             GameFrame gameFrame = DataStore.get("gameFrame");
             gameFrame.enemyPlanePluses.remove(this);
         }

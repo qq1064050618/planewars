@@ -52,14 +52,12 @@ public class Bullet extends BaseSprite implements Moveable, Drawable {
                 enemyPlaneList.remove(e);
                 gameFrame.bulletsList.remove(this);
                 gameFrame.score+=2;
-            }
-            for (int i=1;i<10;i++) {
-                gameFrame.explodes.add(new Explode(e.getX(), e.getY(), ImageMap.get("explod"+i)));
-                gameFrame.isExplode=true;
-            }
-            for (int i=1;i<10;i++) {
-                gameFrame.explodes.add(new Explode(e.getX(), e.getY(), ImageMap.get("explod"+i)));
-                gameFrame.isExplode=true;
+                if (gameFrame.killEnergy<20){
+                gameFrame.killEnergy++;}
+                for (int i=1;i<10;i++) {
+                    gameFrame.explodes.add(new Explode(e.getX(), e.getY(), ImageMap.get("explod"+i)));
+                    gameFrame.isExplode=true;
+                }
             }
         }
 
@@ -73,23 +71,27 @@ public class Bullet extends BaseSprite implements Moveable, Drawable {
                 enemyPlanePluses.remove(e);
                 gameFrame.bulletsList.remove(this);
                 gameFrame.score+=5;
-            }
-            for (int i=1;i<10;i++) {
-                gameFrame.explodes.add(new Explode(e.getX(), e.getY(), ImageMap.get("explod"+i)));
-                gameFrame.isExplode=true;
+                if (gameFrame.killEnergy<20){
+                gameFrame.killEnergy++;}
+                for (int i=1;i<10;i++) {
+                    gameFrame.explodes.add(new Explode(e.getX(), e.getY(), ImageMap.get("explod"+i)));
+                    gameFrame.isExplode=true;
+                }
             }
         }
     }
     public  void  collisionTestingBoss(Boss boss){
         GameFrame gameFrame=DataStore.get("gameFrame");
         if (boss.getRectangle().intersects(this.getRectangle())){
+            gameFrame.bulletsList.remove(this);
             gameFrame.bossBlood--;
+            if (gameFrame.bossBlood<=0){
+                gameFrame.score+=50;
+                for (int i=1;i<10;i++) {
+                    gameFrame.explodes.add(new Explode(boss.getX(), boss.getY(), ImageMap.get("explod"+i)));
+                    gameFrame.isExplode=true;
+                }
+            }
         }
-        if (gameFrame.bossBlood<=0){
-            gameFrame.score+=50;
-        for (int i=1;i<10;i++) {
-            gameFrame.explodes.add(new Explode(boss.getX(), boss.getY(), ImageMap.get("explod"+i)));
-            gameFrame.isExplode=true;
-        }
-    }  }
+      }
 }

@@ -22,9 +22,8 @@ public class Plane extends BaseSprite implements Drawable, Moveable {
     private final int SPEED = FrameConstant.GAME_SPEED *2;
     private final int WIDTH=ImageMap.get("ep01").getWidth(null);
     private final int WIDTHPLUS=ImageMap.get("ep02").getWidth(null);
-    private final int BOSSWIDTH=ImageMap.get("boss").getWidth(null);
+   // private final int BOSSWIDTH=ImageMap.get("boss").getWidth(null);
     public final long start=System.currentTimeMillis();
-    public long end=System.currentTimeMillis();
     static int type=1;
 
 
@@ -42,12 +41,14 @@ public class Plane extends BaseSprite implements Drawable, Moveable {
     @Override
     public void draw(Graphics g) {
         long end=System.currentTimeMillis();
-        if (end-start<0){
+        if (end-start<20000){
             newEnemyPlane();
+        }else if (end -start<50000){
+            newEnemyPlanePlus();
         }else {
+            newEnemyPlane();
             newEnemyPlanePlus();
         }
-
         move();
         g.drawImage(image, getX(), getY(), image.getWidth(null), image.getHeight(null), null);
     }
@@ -94,6 +95,18 @@ public class Plane extends BaseSprite implements Drawable, Moveable {
         borderTesting();
     }
 
+    public void isKill(){
+        GameFrame gameFrame=DataStore.get("gameFrame");
+        if (gameFrame.killEnergy == 20) {
+            gameFrame.kills.add(new Kill(320, 400, ImageMap.get("kill1"), 1));
+            gameFrame.kills.add(new Kill(320, 400, ImageMap.get("kill2"), 2));
+            gameFrame.kills.add(new Kill(320, 400, ImageMap.get("kill3"), 3));
+            gameFrame.kills.add(new Kill(320, 400, ImageMap.get("kill4"), 4));
+            //kills.add(new Kill(320,400,ImageMap.get("kill5"),5));
+            gameFrame.kills.add(new Kill(320, 400, ImageMap.get("kill6"), 6));
+            gameFrame.killEnergy = 0;
+        }
+    }
     public void borderTesting() {
         if (getX() < 0) {
             setX(0);
@@ -125,6 +138,9 @@ public class Plane extends BaseSprite implements Drawable, Moveable {
         if (e.getKeyCode() == KeyEvent.VK_J) {
             fire = true;
         }
+        if (e.getKeyCode() == KeyEvent.VK_K) {
+            isKill();
+        }
     }
 
     public void keyReleased(KeyEvent e) {
@@ -143,6 +159,10 @@ public class Plane extends BaseSprite implements Drawable, Moveable {
         if (e.getKeyCode() == KeyEvent.VK_J) {
             fire();
             fire = false;
+        }
+        if (e.getKeyCode() == KeyEvent.VK_K) {
+            GameFrame gameFrame=DataStore.get("gameFrame");
+            gameFrame.isIndexKill=true;
         }
     }
 
