@@ -59,6 +59,7 @@ public class EnemyBulletPlus extends BaseSprite implements Drawable, Moveable {
                 gameFrame.enemyBulletPluses.remove(this);
                 gameFrame.blood--;
             }
+            if (gameFrame.blood==0)
             gameFrame.gameOver=true;
         }
     }

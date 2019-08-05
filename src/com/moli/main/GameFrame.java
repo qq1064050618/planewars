@@ -45,12 +45,13 @@ public class GameFrame extends Frame {
     public final List<Kill> kills = new CopyOnWriteArrayList<>();
     public final List<Guard> guards = new CopyOnWriteArrayList<>();
 
+    public  boolean indexTool=false;
     public boolean guard=false;
     public boolean startB = false;
     public boolean gameOver = false;
     public int score = 0;
     public int blood = 5;
-    public int bossBlood = 1000;
+    public int bossBlood = 100;
     public boolean isExplode = false;
     public int killEnergy = 0;
     //用作消除时判断
@@ -62,18 +63,19 @@ public class GameFrame extends Frame {
 
     @Override
     public void paint(Graphics g) {
+
+        background.draw(g);
+        for (Start s : start
+        ) {
+            s.draw(g);
+        }
         if (bossBlood <= 0) {
             gameOver = true;
             g.setColor(new Color(255, 0, 0));
             g.setFont(new Font("宋体", Font.ITALIC, 100));
             g.drawString("victory", 200, 500);
         }
-        background.draw(g);
-        for (Start s : start
-        ) {
-            s.draw(g);
-        }
-        if (/*!gameOver*/true && startB) {
+        if (!gameOver&& startB) {
             if (guard){
                 for (Guard e:guards
                      ) {
@@ -83,6 +85,11 @@ public class GameFrame extends Frame {
             plane.draw(g);
            if (bossTimer>=50*50) {
                 boss.draw(g);
+               g.setColor(new Color(255, 0, 0));
+               g.setFont(new Font("黑体", Font.BOLD, 60));
+               g.drawString(""+bossBlood,
+                       boss.getX()+ImageMap.get("boss").getWidth(null)/2-60,
+                       boss.getY()+ ImageMap.get("boss").getHeight(null)/2+40);
                  for (Bullet b : bulletsList
             ) {
                 b.collisionTestingBoss(boss);
@@ -92,11 +99,7 @@ public class GameFrame extends Frame {
             ) {
                 start.remove(s);
             }
-             /*   g.setColor(new Color(255, 0, 0));
-                g.setFont(new Font("黑体", Font.BOLD, 60));
-                g.drawString(""+bossBlood,
-                        boss.getX()+ImageMap.get("boss").getWidth(null)/2-40,
-                        boss.getY()+ ImageMap.get("boss").getHeight(null)/2+40);*/
+             /*  */
             if (kills.size() > 3&&isIndexKill) {
                 System.out.println("3333");
                 for (Kill k : kills
@@ -173,9 +176,7 @@ public class GameFrame extends Frame {
                 }
                 isIndexKill=false;
                 indexKill=false;
-                System.out.println("4444");
             }
-
 
             g.setFont(new Font("楷体", Font.BOLD, 20));
             g.setColor(Color.MAGENTA);
@@ -208,6 +209,7 @@ public class GameFrame extends Frame {
             /* g.setColor(Color.red);
         g.drawString(""+enemyBullets.size(),100,100);*/
         } else if (blood == 0) {
+            System.out.println(blood);
             g.setColor(new Color(255, 0, 0));
             g.setFont(new Font("宋体", Font.ITALIC, 100));
             g.drawString("GAME  OVER!", 100, 500);

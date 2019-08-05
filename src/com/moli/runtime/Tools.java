@@ -15,6 +15,7 @@ public class Tools extends BaseSprite implements Drawable, Moveable {
     Image image;
     int type;
 
+
     public Tools() {
         this(0, 0, ImageMap.get("blood"),0);
     }
@@ -45,8 +46,10 @@ public class Tools extends BaseSprite implements Drawable, Moveable {
             }
             if (type==1&&Plane.type<3){
                 Plane.type++;
+                if (Plane.type==3)
+                   gameFrame.indexTool=true;
             }
-           if (type==1&&Plane.type==3){
+           if (type==1&&gameFrame.indexTool){
                gameFrame.guards.removeAll(gameFrame.guards);
                 gameFrame.guards.add(new Guard(plane.getX(),plane.getY(),ImageMap.get("guard")));
                 gameFrame.guard=true;
