@@ -11,7 +11,7 @@ public class DataStore {
     public static void put(String key,Object value){
 map.put(key,value);
     }
-    public static <T>T get(String key) {
+    public static <T> T get(String key) {
         return (T) map.get(key);
     }
 }

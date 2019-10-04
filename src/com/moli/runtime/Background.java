@@ -5,7 +5,6 @@ import com.moli.base.Drawable;
 import com.moli.base.Moveable;
 import com.moli.constant.FrameConstant;
 import com.moli.util.ImageMap;
-import com.moli.util.ImageUtil;
 
 import java.awt.*;
 

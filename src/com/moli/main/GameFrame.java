@@ -45,8 +45,8 @@ public class GameFrame extends Frame {
     public final List<Kill> kills = new CopyOnWriteArrayList<>();
     public final List<Guard> guards = new CopyOnWriteArrayList<>();
 
-    public  boolean indexTool=false;
-    public boolean guard=false;
+    public boolean indexTool = false;
+    public boolean guard = false;
     public boolean startB = false;
     public boolean gameOver = false;
     public int score = 0;
@@ -54,12 +54,28 @@ public class GameFrame extends Frame {
     public int bossBlood = 100;
     public boolean isExplode = false;
     public int killEnergy = 0;
+    public boolean suspend = false;
     //用作消除时判断
     public static boolean indexKill = false;
     //用作键盘监听判断
-    public static boolean isIndexKill=false;
-    int bossTimer=0;
+    public static boolean isIndexKill = false;
+    int bossTimer = 0;
 
+    /*采用单例模式，保证GameFrame界面的唯一性*/
+    private GameFrame() {
+
+    }
+
+    private static GameFrame gameFrame = null;
+
+    public static GameFrame getGameFrame() {
+        if (gameFrame == null) {
+            gameFrame = new GameFrame();
+            return gameFrame;
+        } else {
+            return gameFrame;
+        }
+    }
 
     @Override
     public void paint(Graphics g) {
@@ -75,32 +91,32 @@ public class GameFrame extends Frame {
             g.setFont(new Font("宋体", Font.ITALIC, 100));
             g.drawString("victory", 200, 500);
         }
-        if (!gameOver&& startB) {
-            if (guard){
-                for (Guard e:guards
-                     ) {
+        if (!gameOver && startB) {
+            if (guard) {
+                for (Guard e : guards
+                ) {
                     e.draw(g);
                 }
             }
             plane.draw(g);
-           if (bossTimer>=50*50) {
+            if (bossTimer >= 50 * 50) {
                 boss.draw(g);
-               g.setColor(new Color(255, 0, 0));
-               g.setFont(new Font("黑体", Font.BOLD, 60));
-               g.drawString(""+bossBlood,
-                       boss.getX()+ImageMap.get("boss").getWidth(null)/2-60,
-                       boss.getY()+ ImageMap.get("boss").getHeight(null)/2+40);
-                 for (Bullet b : bulletsList
-            ) {
-                b.collisionTestingBoss(boss);
-            }
+                g.setColor(new Color(255, 0, 0));
+                g.setFont(new Font("黑体", Font.BOLD, 60));
+                g.drawString("" + bossBlood,
+                        boss.getX() + ImageMap.get("boss").getWidth(null) / 2 - 60,
+                        boss.getY() + ImageMap.get("boss").getHeight(null) / 2 + 40);
+                for (Bullet b : bulletsList
+                ) {
+                    b.collisionTestingBoss(boss);
+                }
             }
             for (Start s : start
             ) {
                 start.remove(s);
             }
-             /*  */
-            if (kills.size() > 3&&isIndexKill) {
+            /*  */
+            if (kills.size() > 3 && isIndexKill) {
                 System.out.println("3333");
                 for (Kill k : kills
                 ) {
@@ -174,8 +190,8 @@ public class GameFrame extends Frame {
                 ) {
                     kills.remove(k);
                 }
-                isIndexKill=false;
-                indexKill=false;
+                isIndexKill = false;
+                indexKill = false;
             }
 
             g.setFont(new Font("楷体", Font.BOLD, 20));
@@ -184,13 +200,13 @@ public class GameFrame extends Frame {
 
 
             //怒气值的设定
-            if (killEnergy <20) {
-                g.fillRect(600, 100, killEnergy*4, 30);
+            if (killEnergy < 20) {
+                g.fillRect(600, 100, killEnergy * 4, 30);
                 g.drawString("怒气值:" + killEnergy, 600, 150);
             } else {
                 g.setColor(Color.RED);
-                g.fillRect(600, 100, killEnergy*4, 30);
-                g.drawString("大招充能完毕" , 600, 150);
+                g.fillRect(600, 100, killEnergy * 4, 30);
+                g.drawString("大招充能完毕", 600, 150);
             }
             //得分一系列的设置
             g.setColor(new Color(151, 255, 166));
@@ -220,7 +236,9 @@ public class GameFrame extends Frame {
 
     public void init() {
         setSize(FrameConstant.FRAME_WIDTH, FrameConstant.FRAME_HEIGHT);
+        //设置窗口居中
         setLocationRelativeTo(null);
+        //不允许输入法输入
         enableInputMethods(false);
         addWindowListener(new WindowAdapter() {
             @Override
@@ -228,7 +246,9 @@ public class GameFrame extends Frame {
                 System.exit(0);
             }
         });
+        //不能改变窗口大小
         setResizable(false);
+        //添加开始按钮
         start.add(new Start());
 //鼠標監聽
         addMouseListener(new MouseAdapter() {
@@ -292,23 +312,20 @@ public class GameFrame extends Frame {
 
 
         setVisible(true);
-
-
-        new Thread() {
+        addKeyListener(new KeyAdapter() {
             @Override
-            public void run() {
-                while (true) {
-                    repaint();
-                    try {
-                        Thread.sleep(20);
-                        bossTimer++;
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+            public void keyReleased(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                    if (suspend == false) {
+                        suspend = true;
+                    } else {
+                        suspend = false;
+                        new GameThread().start();
                     }
                 }
             }
-        }.start();
-
+        });
+        new GameThread().start();
     }
 
     //取消閃屏

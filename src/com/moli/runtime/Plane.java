@@ -32,7 +32,6 @@ public class Plane extends BaseSprite implements Drawable, Moveable {
                 FrameConstant.FRAME_HEIGHT - ImageMap.get("my01").getHeight(null) - 20,
                 ImageMap.get("my01"));
     }
-
     public Plane(int x, int y, Image image) {
         super(x, y);
         this.image = image;

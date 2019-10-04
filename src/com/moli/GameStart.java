@@ -5,7 +5,7 @@ import com.moli.util.DataStore;
 
 public class GameStart {
     public static void main(String[] args) {
-      GameFrame gameFrame=new GameFrame();
+      GameFrame gameFrame=GameFrame.getGameFrame();
         DataStore.put("gameFrame",gameFrame);
         gameFrame.init();
     }
